@@ -1,3 +1,8 @@
+
+app_name = 'main'  # here for namespacing of urls.
+import numpy as np
+
+
 def nickname(name):
     long = len(name)  # Calcular la longitud del nomre de usuario
     y = name.isalnum()  # Calcula que la cadena contenga valores alfanuméricos
@@ -44,28 +49,71 @@ def password(passwd):
 def newPerson():
 
     valpsw= False
-    correct= False
+    valname= False
+    valreg= False
+    people = []
 
-    while correct == False:
-        name = input("please enter your name: ")
-        if nickname(name) == True:
-           correct = True
+    while valreg == False:
+        aw = input("You want to register a user (r) or login (l) or exit (exit), capital letters are not accepted")
+        valpsw = False
+        valname = False
+        if aw == "r":
+            while valname == False:
+                name = input("please enter your name: ")
+                if nickname(name):
+                    valname = True
 
-    while  valpsw==False :
-        pwd = input("please enter your password: ")
-        if (password(pwd)):
-            valpsw = True
+            while  valpsw == False:
+                pwd = input("please enter your password: ")
+                if (password(pwd)):
+                    valpsw = True
 
-    admin = input("are you admin? yes or no?:    ")
+            admin = input("are you admin? yes or no?:    ")
 
-    if admin == "yes":
-        isadmin = True
-    else:
-        isadmin = False
+            if admin == "yes":
+                isadmin = True
+            else:
+                isadmin = False
+        elif aw == "l":
+                salida = input("please enter a name: ")
+                pwdL = input("please enter a password: ")
+                for s in people:
+                    if s.__contains__(salida) and s.__contains__(pwdL):
+                        asw= input ('You want to list or delete any user?(d), change you password?(p), or LogOut(o)')
+                        if asw == "d":
+                            if s.__contains__(True):
+                                print("list of users:", people)
+                                res= input("Do you want to delete any of them? yes(y) or no(n)")
+                                if res == "y":
+                                    nom = input("type the name of the person you want to delete")
+                                    for d in people:
+                                        if d.__contains__(nom):
+                                            people.remove(d)
+                                            print(nom, "successfully removed !!!")
+                            else:
+                                print("Only administrators can delete another user")
 
-    person = {'name': name, 'pwd': pwd, 'isadmin': isadmin}
-    return person
+                        elif asw == "p":
+                            newpwd=input("enter your new password")
+                            if newpwd == pwdL:
+                                print("passwords can't be the same")
+                            else:
+                                if (password(newpwd)):
+                                    people.remove(s)
+                                    s.remove(pwdL)
+                                    s.add(newpwd)
+                                    people.append(s)
+                                    print("password changed successfully !!!")
+                        elif asw == "o":
+                                break
+
+        elif aw == "exit":
+            exit()
+
+        person = {name, pwd, isadmin}
+        people.append(person)
+        valreg == True
+    return
 
 people = []
 people.append(newPerson())
-print(people)
