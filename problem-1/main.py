@@ -1,5 +1,4 @@
 # geometricforms is a program that print info about figures
-# geometricforms es un programa que imprime información sobre las figuras
 
 
 
@@ -64,7 +63,6 @@ def main():
 
     while True:
         # prompts user for the shape
-        # solicita al usuario la forma
         shape = input(
             "What shape would you like to calculate the metrics of? Input \"c\" for  \"cube\", \"ci\" for \"circle\", "
             "\"s\" for \"square\", \"q\" for \"quit\": ").lower().strip()
