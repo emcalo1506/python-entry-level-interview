@@ -1,35 +1,29 @@
-
-app_name = 'main'  # here for namespacing of urls.
-import numpy as np
-
-
 def nickname(name):
-    long = len(name)  # Calcular la longitud del nomre de usuario
-    y = name.isalnum()  # Calcula que la cadena contenga valores alfanuméricos
-
-    if y == False:  # La cadena contiene valores no alfanuméricos
+    if not name.isalpha():  # La cadena contiene valores no alfanumericos
         print("The name must have only letters")
+        return False
 
-    if long < 5:
-        print("The name must have  5 letters")
+    if len(name) < 5:
+        print("The name must have at least 5 letters")
+        return False
+    else:
+        return True  # Verdadero si el tamano es mayor a 5 y menor a 13
 
-    if long > 5 and y == True:
-        return True  # Verdadero si el tamaño es mayor a 5 y menor a 13
 
 def password(passwd):
-    SpecialSym = ['$', '@', '#', '%', '+']
+    special_sym = ['$', '@', '#', '%', '+']
     val = True
 
     if len(passwd) < 6:
-        print('length should be at least 6')
+        print('password should have at least 6 characters')
         val = False
 
     if len(passwd) > 20:
-        print('length should be not be greater than 8')
+        print('password should not be longer than 20 characters')
         val = False
 
     if not any(char.isdigit() for char in passwd):
-        print('Password should have at least one numeral')
+        print('Password should have at least one number')
         val = False
 
     if not any(char.isupper() for char in passwd):
@@ -40,80 +34,108 @@ def password(passwd):
         print('Password should have at least one lowercase letter')
         val = False
 
-    if not any(char in SpecialSym for char in passwd):
+    if not any(char in special_sym for char in passwd):
         print('Password should have at least one of the symbols $@#')
         val = False
     if val:
         return val
 
-def newPerson():
 
-    valpsw= False
-    valname= False
-    valreg= False
+def isadmin(admin):
+    if admin.lower() == "y":
+        valadmin = True
+        isadmin = True
+    elif admin.lower() == "n":
+        valadmin = True
+        isadmin = False
+    else:
+        isadmin = False
+        valadmin = False
+        print("Invalid value")
+    return isadmin, valadmin
+
+
+def new_person():
     people = []
 
-    while valreg == False:
-        aw = input("You want to register a user (r) or login (l) or exit (exit), capital letters are not accepted")
+    while True:
+        aw = input("You want to register a user (r) or login (l) or exit (e)? ")
         valpsw = False
         valname = False
-        if aw == "r":
-            while valname == False:
-                name = input("please enter your name: ")
-                if nickname(name):
-                    valname = True
+        valadmin = False
 
-            while  valpsw == False:
+        if aw.lower() == "r":
+            while not valname:
+                name = input("please enter your username: ")
+                valname = nickname(name.strip())
+
+            while not valpsw:
                 pwd = input("please enter your password: ")
-                if (password(pwd)):
-                    valpsw = True
+                valpsw = password(pwd.strip())
 
-            admin = input("are you admin? yes or no?:    ")
+            while not valadmin:
+                admin = input("are you admin? yes(y) or no(n)?: ")
+                admin, valadmin = isadmin(admin.strip())
 
-            if admin == "yes":
-                isadmin = True
-            else:
-                isadmin = False
-        elif aw == "l":
-                salida = input("please enter a name: ")
-                pwdL = input("please enter a password: ")
-                for s in people:
-                    if s.__contains__(salida) and s.__contains__(pwdL):
-                        asw= input ('You want to list or delete any user?(d), change you password?(p), or LogOut(o)')
-                        if asw == "d":
-                            if s.__contains__(True):
-                                print("list of users:", people)
-                                res= input("Do you want to delete any of them? yes(y) or no(n)")
-                                if res == "y":
-                                    nom = input("type the name of the person you want to delete")
+            person = [name.strip(), pwd.strip(), admin]
+            people.append(person)
+
+        elif aw.lower() == "l":
+            salida = input("please enter your username: ")
+            pwdL = input("please enter your password: ")
+            user_exists = False
+            for s in people:
+                if s[0] == salida and s[1] == pwdL:
+                    user_exists = True
+                    asw = input(
+                        "You want to list the users or delete any user?(d), change you password?(p), or LogOut(o)?: ")
+                    if asw.lower() == "d":
+                        if s[2]:  # if user is admin
+                            print("list of users:", people)
+                            res = input("Do you want to delete any of them? yes(y) or no(n)?: ")
+                            if res.lower() == "y":
+                                nom = input("type the name of the person you want to delete: ")
+                                if nom != salida:
                                     for d in people:
-                                        if d.__contains__(nom):
+                                        if d[0] == nom:
                                             people.remove(d)
                                             print(nom, "successfully removed !!!")
-                            else:
-                                print("Only administrators can delete another user")
+                                else:
+                                    print("You can't remove yourself from the list")
+                        else:
+                            print("Only administrators can delete another user and see the list of users")
 
-                        elif asw == "p":
-                            newpwd=input("enter your new password")
+                    elif asw.lower() == "p":
+                        valpwd = False
+                        while not valpwd:
+                            newpwd = input("enter your new password: ")
                             if newpwd == pwdL:
                                 print("passwords can't be the same")
                             else:
-                                if (password(newpwd)):
-                                    people.remove(s)
-                                    s.remove(pwdL)
-                                    s.add(newpwd)
-                                    people.append(s)
-                                    print("password changed successfully !!!")
-                        elif asw == "o":
-                                break
+                                valpwd = password(newpwd)
+                        people.remove(s)
+                        s[1] = newpwd
+                        people.append(s)
+                        print("password changed successfully !!!")
 
-        elif aw == "exit":
+                    elif asw.lower() == "o":
+                        break
+                    else:
+                        print("Invalid input")
+
+            if not user_exists:
+                print("Wrong username or password")
+
+        elif aw.lower() == "e":
             exit()
+        else:
+            print("Option not valid")
 
-        person = {name, pwd, isadmin}
-        people.append(person)
-        valreg == True
-    return
 
-people = []
-people.append(newPerson())
+def main():
+    print("Program is starting")
+    new_person()
+
+
+if __name__ == "__main__":
+    main()
