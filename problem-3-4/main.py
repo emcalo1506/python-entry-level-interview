@@ -1,11 +1,5 @@
 
 
-def suma( num1, num2):
-    num3 = num1 + num2
-    return num3
-
-
-
 def nickname(name):
     if not name.isalpha():  # La cadena contiene valores no alfanumericos
         print("The name must have only letters")
@@ -64,7 +58,7 @@ def isadmin(admin):
 
 
 
-class NewPerson():
+def NewPerson():
     people = []
 
     while True:
@@ -140,12 +134,12 @@ class NewPerson():
         else:
             print("Option not valid")
 
-
-def main():
-    print("Program is starting")
-    NewPerson()
-
-
-
-if __name__ == "__main__":
-    main()
+#
+# def main():
+#     print("Program is starting")
+#     NewPerson()
+#
+#
+#
+# if __name__ == "__main__":
+#     main()
