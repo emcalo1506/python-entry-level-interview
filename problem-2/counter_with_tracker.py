@@ -2,7 +2,7 @@ from counter import Counter
 from utils import Func
 
 INCREASE = "i"
-DECREASE = "i"
+DECREASE = "d"
 QUIT = "q"
 
 
@@ -12,17 +12,22 @@ class ActionsTracker:
         self.actions = []
         self.actionsResult = []
 
-    def printAll(self):
+    def printAll(self,actions,result):
         """Print all actions and their result."""
         aux = 0
-        for action in self.actions:
+        print("pribando results", self.actionsResult)
+        for action in actions:
+            print("compruebo ")
             aux += 1
-            print(f"Action: {action} result: {self.actionsResult[aux]}")
+            print(f"Action: {action} result: {self.actionsResult}")
 
     def track(self, action, result):
         """Track action and result."""
+        print("estoy en track", action, result)
         self.actions.append(action)
+        print('imprimo action', self.actions)
         self.actionsResult.append(result)
+        print("imprimo actions result", self.actionsResult)
 
 
 class CounterWithTrackerProgram:
@@ -31,7 +36,7 @@ class CounterWithTrackerProgram:
     running = True
     actions = {
         INCREASE: Func("action", {"action": "increase"}),
-        DECREASE: Func("update", {"action": "decrease"}),
+        DECREASE: Func("action", {"action": "decrease"}),
         QUIT: Func("quit")
     }
 
@@ -39,7 +44,8 @@ class CounterWithTrackerProgram:
     def action(cls, action: str):
         """Process action."""
         getattr(cls.counter, action)()
-        cls.actionsTracker.track(action.upper(), cls.counter.count)
+        print("entra en action tracker", cls.actionsTracker.track(action.upper(), cls.counter.count) )
+        cls.actionsTracker.track(action.upper(), cls.counter)
         print(f"Counter is now {cls.counter.count}")
 
     @classmethod
@@ -65,7 +71,8 @@ class CounterWithTrackerProgram:
         print("---- Counter -----:")
         print(f"Value: {cls.counter.count}")
         print("---- Summary of actions -----:")
-        cls.actionsTracker.printAll()
+        print("en print sumary ", cls.counter.count)
+        cls.actionsTracker.printAll(cls.actions,)
 
     @classmethod
     def run(cls):
@@ -76,8 +83,9 @@ class CounterWithTrackerProgram:
             action = getattr(cls, cls_action.method)
             action(**cls_action.payload)
 
-        if cls.actionsTracker.actions:
+        if cls.actions:
             cls.print_summary()
+
 
 
 if __name__ == '__main__':
