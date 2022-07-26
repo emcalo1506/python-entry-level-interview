@@ -1,3 +1,8 @@
+from unittest.mock import MagicMock
+
+
+
+
 def nickname(name):
     if not name.isalpha():  # La cadena contiene valores no alfanumericos
         print("The name must have only letters")
@@ -55,7 +60,8 @@ def isadmin(admin):
     return isadmin, valadmin
 
 
-def new_person():
+
+class NewPerson():
     people = []
 
     while True:
@@ -131,10 +137,14 @@ def new_person():
         else:
             print("Option not valid")
 
+real = NewPerson()
+real.isadmin = MagicMock(name='isadmin')
+real.isadmin.assert_called_once_with('y','n')
+print(real)
 
 def main():
     print("Program is starting")
-    new_person()
+    NewPerson()
 
 
 if __name__ == "__main__":
