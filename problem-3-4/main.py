@@ -1,5 +1,8 @@
-from unittest.mock import MagicMock
 
+
+def suma( num1, num2):
+    num3 = num1 + num2
+    return num3
 
 
 
@@ -137,14 +140,11 @@ class NewPerson():
         else:
             print("Option not valid")
 
-real = NewPerson()
-real.isadmin = MagicMock(name='isadmin')
-real.isadmin.assert_called_once_with('y','n')
-print(real)
 
 def main():
     print("Program is starting")
     NewPerson()
+
 
 
 if __name__ == "__main__":
