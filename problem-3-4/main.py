@@ -1,7 +1,7 @@
 
 
 def nickname(name):
-    if not name.isalpha():  # La cadena contiene valores no alfanumericos
+    if not name.isalpha():
         print("The name must have only letters")
         return False
 
@@ -9,7 +9,7 @@ def nickname(name):
         print("The name must have at least 5 letters")
         return False
     else:
-        return True  # Verdadero si el tamano es mayor a 5 y menor a 13
+        return True
 
 
 def password(passwd):
@@ -93,7 +93,7 @@ def NewPerson():
                     asw = input(
                         "You want to list the users or delete any user?(d), change you password?(p), or LogOut(o)?: ")
                     if asw.lower() == "d":
-                        if s[2]:  # if user is admin
+                        if s[2]:
                             print("list of users:", people)
                             res = input("Do you want to delete any of them? yes(y) or no(n)?: ")
                             if res.lower() == "y":
@@ -134,12 +134,12 @@ def NewPerson():
         else:
             print("Option not valid")
 
-#
-# def main():
-#     print("Program is starting")
-#     NewPerson()
-#
-#
-#
-# if __name__ == "__main__":
-#     main()
+
+def main():
+    print("Program is starting")
+    NewPerson()
+
+
+
+if __name__ == "__main__":
+    main()
