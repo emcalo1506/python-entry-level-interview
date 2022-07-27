@@ -2,7 +2,7 @@ from counter import Counter
 from utils import Func
 
 INCREASE = "i"
-DECREASE = "i"
+DECREASE = "d"
 QUIT = "q"
 
 
@@ -16,14 +16,13 @@ class ActionsTracker:
         """Print all actions and their result."""
         aux = 0
         for action in self.actions:
-            aux += 1
             print(f"Action: {action} result: {self.actionsResult[aux]}")
+            aux += 1
 
     def track(self, action, result):
         """Track action and result."""
         self.actions.append(action)
         self.actionsResult.append(result)
-
 
 class CounterWithTrackerProgram:
     """A counter program with action tracking builtin ."""
@@ -31,7 +30,7 @@ class CounterWithTrackerProgram:
     running = True
     actions = {
         INCREASE: Func("action", {"action": "increase"}),
-        DECREASE: Func("update", {"action": "decrease"}),
+        DECREASE: Func("action", {"action": "decrease"}),
         QUIT: Func("quit")
     }
 
@@ -70,15 +69,14 @@ class CounterWithTrackerProgram:
     @classmethod
     def run(cls):
         """Run the program."""
+        cls.actionsTracker = ActionsTracker()
         while CounterWithTrackerProgram.running:
-            cls.actionsTracker = ActionsTracker()
             cls_action = CounterWithTrackerProgram._cls_action_from_user_input()
             action = getattr(cls, cls_action.method)
             action(**cls_action.payload)
 
-        if cls.actionsTracker.actions:
+        if cls.actions:
             cls.print_summary()
-
 
 if __name__ == '__main__':
     CounterWithTrackerProgram.run()
