@@ -24,8 +24,6 @@ class ActionsTracker:
         self.actions.append(action)
         self.actionsResult.append(result)
 
-
-
 class CounterWithTrackerProgram:
     """A counter program with action tracking builtin ."""
     counter = Counter()
@@ -79,8 +77,6 @@ class CounterWithTrackerProgram:
 
         if cls.actions:
             cls.print_summary()
-
-
 
 if __name__ == '__main__':
     CounterWithTrackerProgram.run()

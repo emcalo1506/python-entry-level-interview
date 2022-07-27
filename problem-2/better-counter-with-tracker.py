@@ -24,9 +24,6 @@ def counter():
             for action in actions:
                 print(f"Action: {action} result: {results[aux]}")
                 aux += 1
-
-
-
             break
         else:
             print("choose one correct option")
