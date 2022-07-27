@@ -1,8 +1,5 @@
 # geometricforms is a program that print info about figures
 
-
-
-
 # Boolean variable to allow while loop to continue
 continueLoop = True
 
@@ -23,13 +20,9 @@ def summarize(clist, testNumber):
 
     outf.close()
 
-
-
-
 from math import pi
 
 figures_registry = []
-
 
 class Cube(object):
     def __init__(self, v):
@@ -77,7 +70,6 @@ def main():
                     print(i.to_str())
 
                 break
-
 
         elif shape == "ci":
             a = int(input("what is the radio of the circle: "))
