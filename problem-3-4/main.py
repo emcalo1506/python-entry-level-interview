@@ -11,7 +11,6 @@ def nickname(name):
     else:
         return True
 
-
 def password(passwd):
     special_sym = ['$', '@', '#', '%', '+']
     val = True
