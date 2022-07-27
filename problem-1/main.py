@@ -89,7 +89,6 @@ def main():
             print(c.to_str())
             figures_registry.append(c)
 
-
         else:
             print("enter proper value")
 
