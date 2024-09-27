@@ -66,6 +66,7 @@ def main():
         text_line = " ".join(word_list)
         return text_line
 
+
     testNumber = input("What is the test number? ")
 
     while continueLoop:
